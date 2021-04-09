@@ -64,6 +64,10 @@
       <NuxtImg provider="imagekit" src="/img/plant.jpeg" />
       </p<select>
     </div>
+    <img :src="$img('/images/colors.jpg', {format: 'webp'})" width="50%" />
+    <client-only>
+      <img :src="$img('/images/colors.jpg', {format: 'webp'})" width="50%" /><!-- this did not work -->
+    </client-only>
   </div>
 </template>
 

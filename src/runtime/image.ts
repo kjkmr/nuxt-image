@@ -6,7 +6,7 @@ import { parseSize } from './utils'
 import { useStaticImageMap } from './utils/static-map'
 
 export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
-  const staticImageManifest = (process.client && process.static) ? useStaticImageMap(nuxtContext) : {}
+  let staticImageManifest = (process.client && process.static) ? useStaticImageMap(nuxtContext) : {}
 
   const ctx: ImageCTX = {
     options: globalOptions,
@@ -36,6 +36,9 @@ export function createImage (globalOptions: CreateImageOptions, nuxtContext) {
       const staticImagesBase = '/_nuxt/image' // TODO
 
       if (process.client && 'fetchPayload' in window.$nuxt) {
+        if (!staticImageManifest[image.url]) {
+          staticImageManifest = (process.client && process.static) ? useStaticImageMap(null) : {}
+        }
         const mappedURL = staticImageManifest[image.url]
         image.url = mappedURL ? joinURL(staticImagesBase, mappedURL) : input
         return image
